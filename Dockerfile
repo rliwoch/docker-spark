@@ -60,6 +60,9 @@ COPY sourceHadoopVars.sh /tmp/
 # Run script to setup env vars
 RUN /tmp/sourceHadoopVars.sh
 
+# Remove documentation - it's 400MB
+RUN rm -rf /usr/local/hadoop-${HADOOP_VERSION}/share/doc/
+
 # We will be running our Spark jobs as `root` user.
 USER root
 
