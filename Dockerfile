@@ -36,8 +36,8 @@ ENV PATH        $JAVA_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$SPARK_HOME/bin:$SP
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache bash bash-completion vim screen tmux nano sed
-    # rm -rf /var/lib/apt/lists/* && \
-    # rm -rf /tmp/* && \
+
+# Now lets grab everything for spark scala and hadoop
 RUN wget -qO - ${SCALA_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
     wget -qO - ${SBT_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/  && \
     wget -qO - ${SPARK_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
