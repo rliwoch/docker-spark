@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8u151-jdk-alpine
 
 MAINTAINER Rafal Liwoch <rafal.liwoch@gmail.com>
 ## credits to Prashanth Babu https://github.com/P7h/docker-spark
@@ -33,12 +33,12 @@ ENV SPARK_HOME  /usr/local/spark
 ENV PATH        $JAVA_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
 # Download, uncompress and move all the required packages and libraries to their corresponding directories in /usr/local/ folder.
-RUN apt-get -yqq update && \
-    apt-get install -yqq vim screen tmux nano && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* && \
-    wget -qO - ${SCALA_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache bash bash-completion vim screen tmux nano sed
+    # rm -rf /var/lib/apt/lists/* && \
+    # rm -rf /tmp/* && \
+RUN wget -qO - ${SCALA_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
     wget -qO - ${SBT_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/  && \
     wget -qO - ${SPARK_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
     wget -qO - ${HADOOP_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
@@ -60,6 +60,9 @@ COPY sourceHadoopVars.sh /tmp/
 # Run script to setup env vars
 RUN /tmp/sourceHadoopVars.sh
 
+# Remove documentation - it's 400MB
+RUN rm -rf /usr/local/hadoop-${HADOOP_VERSION}/share/doc/
+
 # We will be running our Spark jobs as `root` user.
 USER root
 
@@ -74,4 +77,4 @@ EXPOSE 4040 8080 8081
 
 
 
-CMD ["/bin/bash"]
+CMD ["/bin/sh"]
