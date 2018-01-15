@@ -19,7 +19,7 @@ ARG SPARK_BINARY_ARCHIVE_NAME=spark-${SPARK_VERSION}-bin-without-hadoop
 ARG SPARK_BINARY_DOWNLOAD_URL=http://apache.mirror.anlx.net/spark/spark-${SPARK_VERSION}/${SPARK_BINARY_ARCHIVE_NAME}.tgz
 
 # Hadoop related variables.
-ARG HADOOP_VERSION=3.0.0
+ARG HADOOP_VERSION=2.9.0
 ARG HADOOP_BINARY_ARCHIVE_NAME=hadoop-${HADOOP_VERSION}
 ARG HADOOP_BINARY_DOWNLOAD_URL=http://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/${HADOOP_BINARY_ARCHIVE_NAME}.tar.gz
 ARG HADOOP_DIR=/usr/local/hadoop
